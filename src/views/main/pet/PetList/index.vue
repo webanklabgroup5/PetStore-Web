@@ -11,10 +11,23 @@
 
     <!-- 表格 -->
     <div class="table-container">
-      <cm-table :list="list" :columns="columns" :pagination="pagination" :options="options" :total="total"></cm-table>
+      <cm-table :list="list" :columns="columns" :pagination="pagination" :options="options" :total="total"
+        :operates="operates"></cm-table>
     </div>
 
     <create-pet :show.sync="showCreate" :formData="formData" @afterCreate="initData"></create-pet>
+
+    <el-dialog :visible.sync="showStatus" title="宠物上架" width="30%">
+      <el-form :model="form" :rules="rules" prop="form" label-width="100px">
+        <el-form-item label="宠物价格" prop="price">
+          <el-input v-model="form.price" type="number" placeholder="请输入宠物价格" style="width:80%"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleSubmit">确定上架</el-button>
+          <el-button @click="showStatus=false">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
 
   </div>
 </template>
@@ -30,7 +43,16 @@ export default {
   data() {
     return {
       formData: {},
+      form: { // 上架宠物的表单
+        price: null
+      },
+      rules: {
+        price: [
+          { required: true, message: '请输入价格', trigger: 'blur' }
+        ]
+      },
       showCreate: false,
+      showStatus: false,
       total: 0,
       speciesItems: items.speciesItems,
       list: [],
@@ -66,7 +88,53 @@ export default {
           label: '宠物描述',
           align: 'center',
         },
+        {
+          prop: 'status',
+          label: '宠物状态',
+          align: 'center',
+          render: (h, params) => {
+            let item = params.row
+            return h('el-tag', {
+              props: { type: item.status === 0 ? 'success' : 'info' }
+            }, item.status === 0 ? '上架中' : '已下架')
+          }
+        },
+        {
+          prop: 'price',
+          label: '宠物价格',
+          align: 'center',
+          formatter: (row, column) => {
+            return row.status === 0 ? row.price : '/'
+          }
+        },
       ], // 需要展示的列
+      operates: {
+        width: 90,
+        list: [
+          {
+            label: '上架',
+            type: 'success',
+            show: (index, row) => {
+              return row.status === 1
+            },
+            icon: 'el-icon-edit',
+            method: (index, row) => {
+              this.handleChangeStatus(row)
+            }
+          },
+          {
+            label: '下架',
+            type: 'danger',
+            show: (index, row) => {
+              return row.status === 0
+            },
+            icon: 'el-icon-edit',
+            method: (index, row) => {
+              this.handleChangeStatus(row)
+            }
+          }
+        ]
+      }, // 操作按钮组
       pagination: {
         pageIndex: 1,
         pageSize: 20,
@@ -84,20 +152,46 @@ export default {
   },
   methods: {
     initData() {
-      const tempParams = {
-        limit: this.pagination.pageSize,
-        offset: (this.pagination.pageIndex-1) * this.pagination.pageSize
-      }
-      // this.api.petList(tempParams).then(res => {
-      //   if (res.status === 0) {
-      //     this.list = res.user_list
-      //     this.total = res.total
-      //   }
-      // })
+      this.list = this.$store.state.user.user.petList
     },
     handleCreate(item) {
       this.formData = item
       this.showCreate = true
+    },
+    handleChangeStatus(item) {
+      this.formData = item
+      if (this.formData.status === 0) {
+        this.$confirm('确定将该宠物下架吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const tempData = { id: this.formData.id }
+          this.api.petDown(tempData).then(res => {
+            if (res.status === 0) {
+              this.$message.success('下架成功!')
+            }
+          })
+        }).catch(() => { })
+      } else {
+        this.showStatus = true
+      }
+    },
+    handleSubmit() {
+      this.$refs['form'].validate(valid => {
+        if (valid) {
+          let tempData = {
+            id: this.formData.id,
+            price: this.form.price
+          }
+          this.api.petOn(tempData).then(res => {
+            if (res.status === 0) {
+              this.showStatus = false
+              this.$message.success('上架成功！')
+            }
+          })
+        }
+      })
     }
   }
 }

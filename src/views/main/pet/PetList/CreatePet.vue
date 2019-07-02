@@ -35,7 +35,8 @@ export default {
     return {
       isEdit: false, // 编辑模式
       showTemp: false,
-      actionUrl: '', // 上传url
+      uploadUrl: '', // 上传url
+      uploading: false,
       form: {
         name: '',
         species: '',

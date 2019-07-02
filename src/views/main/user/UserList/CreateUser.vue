@@ -17,7 +17,11 @@
 export default {
   props: {
     show: Boolean,
-    formData: Object
+    formData: Object,
+    isRegister: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -51,10 +55,10 @@ export default {
   },
   computed: {
     titleText() {
-      return this.isEdit ? '修改用户' : '新增用户'
+      return this.isEdit ? '修改用户' : this.isRegister? '注册用户' : '新增用户'
     },
     buttonText() {
-      return this.isEdit ? '确认修改' : '确认创建'
+      return this.isEdit ? '确认修改' : this.isRegister? '申请注册' : '确认创建'
     },
     rules() {
       let tempRules = {}
