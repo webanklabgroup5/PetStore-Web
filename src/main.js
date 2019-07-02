@@ -15,6 +15,9 @@ import '@/icons'
 // 引入通用组件
 import '@/components'
 
+// v-charts
+import vCharts from 'v-charts'
+
 // api
 import api from '@/api'
 Vue.prototype.api = api
@@ -26,6 +29,7 @@ Vue.config.productionTip = false
 
 Vue.use(base)
 Vue.use(ElementUI)
+Vue.use(vCharts)
 
 new Vue({
   router,

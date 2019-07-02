@@ -168,7 +168,7 @@ export default {
         }).then(() => {
           const tempData = { id: this.formData.id }
           this.api.petDown(tempData).then(res => {
-            if (res.status === 0) {
+            if (res.status === 1) {
               this.$message.success('下架成功!')
             }
           })
@@ -185,7 +185,7 @@ export default {
             price: this.form.price
           }
           this.api.petOn(tempData).then(res => {
-            if (res.status === 0) {
+            if (res.status === 1) {
               this.showStatus = false
               this.$message.success('上架成功！')
             }

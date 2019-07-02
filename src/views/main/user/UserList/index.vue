@@ -73,7 +73,7 @@ export default {
         offset: (this.pagination.pageIndex-1) * this.pagination.pageSize
       }
       // this.api.userList(tempParams).then(res => {
-      //   if (res.status === 0) {
+      //   if (res.status === 1) {
       //     this.list = res.user_list
       //     this.total = res.total
       //   }

@@ -1,0 +1,88 @@
+{
+  "numCards": [
+    {
+      "icon": "money",
+      "num": 50000,
+      "label": "今日营销额"
+    },
+    {
+      "icon": "order",
+      "num": 20,
+      "label": "今日订单数"
+    },
+    {
+      "icon": "fans",
+      "num": 123,
+      "label": "今日新增粉丝"
+    },
+    {
+      "icon": "access",
+      "num": 232,
+      "label": "今日访问量"
+    }
+  ],
+  "todoCards": [
+    {
+      "icon": "sending",
+      "label": "待发货",
+      "num": 1000
+    },
+    {
+      "icon": "after-sales",
+      "label": "售后",
+      "num": 100
+    },
+    {
+      "icon": "refund",
+      "label": "退款",
+      "num": 100
+    },
+    {
+      "icon": "customer-service",
+      "label": "客户咨询",
+      "num": 100
+    }
+  ],
+  "quickButtons": [
+    {
+      "label": "开单",
+      "color": "#2da3fb",
+      "icon": "write",
+      "mouseEnter": true
+    },
+    {
+      "label": "补货",
+      "color": "#2da3fb",
+      "icon": "cart",
+      "mouseEnter": true
+    },
+    {
+      "label": "敬请期待",
+      "color": "#999999",
+      "disabled": true,
+      "icon": "more",
+      "mouseEnter": true
+    },
+    {
+      "label": "敬请期待",
+      "color": "#999999",
+      "disabled": true,
+      "icon": "more",
+      "mouseEnter": true
+    },
+    {
+      "label": "敬请期待",
+      "color": "#999999",
+      "disabled": true,
+      "icon": "more",
+      "mouseEnter": true
+    },
+    {
+      "label": "敬请期待",
+      "color": "#999999",
+      "disabled": true,
+      "icon": "more",
+      "mouseEnter": true
+    }
+  ]
+}

@@ -6,10 +6,10 @@
         <el-form-item class="title">
           <span>宠物商店系统</span>
         </el-form-item>
-        <el-form-item>
+        <!-- <el-form-item>
           <el-radio v-model="formLogin.type" :label="0">管理员</el-radio>
           <el-radio v-model="formLogin.type" :label="1">普通用户</el-radio>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-input ref="account" v-model="formLogin.user_name" placeholder="账号" @keyup.enter.native="login"></el-input>
         </el-form-item>
@@ -17,9 +17,9 @@
           <el-input v-model="formLogin.passwd" placeholder="密码" type="password" @keyup.enter.native="login">
           </el-input>
         </el-form-item>
-        <div class="register-row">
+        <!-- <div class="register-row">
           <el-link type="primary" @click="showCreate=true">没有账号？点击申请</el-link>
-        </div>
+        </div> -->
         <el-row type="flex" justify="center">
           <el-button type="primary" @click="login" :disabled="!formLogin.user_name || !formLogin.passwd">登陆
           </el-button>

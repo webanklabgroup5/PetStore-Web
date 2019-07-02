@@ -106,7 +106,7 @@ export default {
           //   p = this.api.postCourses(tempData)
           // }
           this.api.petAdd(tempData).then(res => {
-            if (res.status === 0) {
+            if (res.status === 1) {
               this.showTemp = false
               this.$message.success(this.isEdit ? '修改成功！' : '创建成功！')
               this.$emit('afterCreate')
@@ -128,7 +128,7 @@ export default {
     handleAvatarSuccess(res, file) {
       this.uploading = false
       this.form.photo = URL.createObjectURL(file.raw)
-      // if (res.status !== 0) {
+      // if (res.status !== 1) {
       //   this.$message.error(res.msg)
       // } else {
       // }

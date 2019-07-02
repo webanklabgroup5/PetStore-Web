@@ -32,8 +32,7 @@ const routes = [{
       routeText: '用户模块',
       routeIcon: 'el-icon-location',
       showSideBar: true,
-      keepAlive: true,
-      permissions: [0]
+      keepAlive: true
     },
     component: _import('main/user/UserList/index')
   }]
@@ -51,8 +50,7 @@ const routes = [{
       routeText: '宠物模块',
       routeIcon: 'el-icon-location',
       showSideBar: true,
-      keepAlive: true,
-      permissions: [1]
+      keepAlive: true
     },
     component: _import('main/pet/PetList/index')
   }]
