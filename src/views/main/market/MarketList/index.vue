@@ -1,14 +1,5 @@
 <template>
   <div class="user-container">
-    <!-- 搜索栏 -->
-    <!-- <el-row type="flex" align="middle" justify="end">
-      <el-col :span="6" style="text-align:end">
-        <el-button type="primary" @click="handleCreate({})">创建用户</el-button>
-      </el-col>
-    </el-row>
-
-    <div style="height:20px"></div>
- -->
     <el-menu default-active="1" mode="horizontal" @select="handleChangeType">
       <el-menu-item v-for="(item,index) in typeItems" :key="index" :index="''+item.id">{{item.name}}</el-menu-item>
     </el-menu>
@@ -17,21 +8,16 @@
       <cm-table :list="list" :columns="columns" :pagination="pagination" :operates="operates" :options="options"
         :total="total"></cm-table>
     </div>
-
-    <!-- <create-user :show.sync="showCreate" :formData="formData" @afterCreate="initData"></create-user> -->
   </div>
 </template>
 
 <script>
-// import CreateUser from './CreateUser'
 import items from './Items'
 export default {
-  name: 'UserList',
+  name: 'MarketList',
   data() {
     return {
-      // formData: {}, // 空对象为新建用户
-      // showCreate: false,
-      type: {id: 1, label: '用户列表'}, // 1为用户列表，2为申请列表
+      type: {id: 1, label: '宠物列表'}, // 1为用户列表，2为申请列表
       typeItems: items.typeItems,
       total: 0,
       list: [],
@@ -71,10 +57,6 @@ export default {
       //   }
       // })
     },
-    // handleCreate(item) {
-    //   this.formData = item
-    //   this.showCreate = true
-    // },
     // 切换类型
     handleChangeType(index) {
       this.type = this.typeItems.find(item => parseInt(index) === item.id)

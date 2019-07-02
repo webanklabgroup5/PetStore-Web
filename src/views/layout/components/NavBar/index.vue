@@ -19,7 +19,7 @@
               <svg-icon iconName="good" height="20" width="20"></svg-icon>
             </cm-star>
           </el-tooltip>
-          <el-dropdown @command="handleCommand" trigger="click">
+          <el-dropdown @command="handleCommand">
             <div class="avatar-box" @mouseenter="isEnter=true" @mouseleave="isEnter=false" :class="isEnterAvatar">
               <img :src="images.avatar">
               <!-- <i class="el-icon-caret-bottom"></i> -->
