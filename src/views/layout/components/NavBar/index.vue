@@ -72,8 +72,10 @@ export default {
     handleCommand(command) {
       switch (command) {
       case 'logout':
-        this.$store.dispatch('logout')
-        this.$router.push('/login')
+        this.$store.dispatch('logout').then(() => {
+          this.$store.commit('reset_route')
+          this.$router.push('/login')
+        })
         break
       default:
         break

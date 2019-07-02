@@ -16,85 +16,47 @@ const routes = [{
       routeIcon: 'el-icon-goods',
       showSideBar: true
     },
-    component: _import('main/TestMain')
+    component: _import('main/index/index')
   }]
 },
 {
-  path: '/test_form',
+  path: '/user',
   component: _import('layout/index'),
   meta: {
     requireAuth: true
   },
   children: [{
-    path: 'index',
-    name: 'TestForm',
+    path: 'userlist',
+    name: 'UserList',
     meta: {
-      routeText: '测试表单',
+      routeText: '用户模块',
       routeIcon: 'el-icon-location',
       showSideBar: true,
-      keepAlive: true
+      keepAlive: true,
+      permissions: [0]
     },
-    component: _import('main/TestForm')
+    component: _import('main/user/UserList/index')
   }]
 },
 {
-  path: '/test_table',
+  path: '/pet',
   component: _import('layout/index'),
   meta: {
     requireAuth: true
   },
   children: [{
-    path: 'index',
-    name: 'TestTable',
+    path: 'petlist',
+    name: 'PetList',
     meta: {
-      routeText: '测试表格',
+      routeText: '宠物模块',
       routeIcon: 'el-icon-location',
       showSideBar: true,
-      keepAlive: true
+      keepAlive: true,
+      permissions: [1]
     },
-    component: _import('main/TestTable'),
+    component: _import('main/pet/PetList/index')
   }]
 },
-{
-  path: '/test_father',
-  meta: {
-    routeText: '测试父路由',
-    routeIcon: 'el-icon-location',
-    requireAuth: true
-  },
-  redirect: {
-    name: 'TestChild'
-  },
-  component: _import('layout/index'),
-  children: [{
-    path: 'test_child',
-    name: 'TestChild',
-    meta: {
-      routeText: '测试子路由',
-      showSideBar: true,
-      keepAlive: true
-    },
-    component: _import('main/TestChild'),
-    children: [{
-      path: 'test_child2',
-      name: 'TestChild2',
-      meta: {
-        routeText: '测试子路由2'
-      },
-      component: _import('main/TestChild2')
-    }]
-  },
-  {
-    path: 'test_child1',
-    name: 'TestChild1',
-    meta: {
-      routeText: '测试子路由1',
-      showSideBar: true
-    },
-    component: _import('main/TestChild1')
-  }
-  ]
-}
 ]
 
 export default routes

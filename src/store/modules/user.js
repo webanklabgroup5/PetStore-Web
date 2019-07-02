@@ -1,26 +1,28 @@
 import localStore from 'storejs'
 
 const state = {
-  token: ''
+  user: {
+    token: ''
+  }
 }
 
 const mutations = {
-  set_token: (state,data) => {
-    state.token = data
-    localStore.set('token',data)
+  set_user: (state,data) => {
+    state.user = data
+    localStore.set('user',data)
   }
 }
 
 const actions = {
-  login ({commit}) {
+  login ({commit} , data) {
     return new Promise (resolve=> {
-      commit('set_token', '123456789')
+      commit('set_user', {token: '123456', type : data.type})
       resolve()
     })
   },
   logout ({commit}) {
     return new Promise(resolve => {
-      commit('set_token', '')
+      commit('set_user', {token: ''})
       resolve()
     })
   }
@@ -28,7 +30,7 @@ const actions = {
 
 const getters = {
   token: state => {
-    return state.token
+    return state.user.token
   }
 }
 

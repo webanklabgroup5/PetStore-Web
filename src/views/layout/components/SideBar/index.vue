@@ -34,7 +34,7 @@
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-menu-item v-else :index="route.children[0].meta.routeText" :key="index">
+          <el-menu-item v-else-if="route.children.length===1" :index="route.children[0].meta.routeText" :key="index">
             <div @click="handleClick(route.children[0])">
               <i :class="route.children[0].meta.routeIcon"></i>
               <span slot="title">{{route.children[0].meta.routeText}}</span>
@@ -65,18 +65,22 @@ export default {
     }
   },
   computed: {
-    ...mapState(['route','common'])
+    ...mapState(['route','common', 'user'])
   },
   methods: {
     initBar() {
-      // this.$refs.elMenu.activeIndex = this.$route.meta.routeText
-      routes.forEach((item, index) => {
+      let tempRoute = this.$objClone(routes)
+      tempRoute.forEach((item, index) => {
         // 只显示要展示的子路由
         if (item.children) {
-          routes[index].children = item.children.filter(route => route.meta.showSideBar)
+          tempRoute[index].children = item.children.filter(route => {
+            let isShow = route.meta.showSideBar
+            let hasPermission = route.meta.permissions ? route.meta.permissions.includes(this.user.user.type) : true
+            return isShow && hasPermission
+          })
         }
       })
-      this.sideBarRoutes = routes
+      this.sideBarRoutes = tempRoute
     },
     handleClick(item) {
       if (this.common.isMobile) {

@@ -32,6 +32,10 @@ const mutations = {
         break
       }
     }
+  },
+  reset_route: (state, data) => {
+    state.routeTabs = [{name: 'Main', text: '首页'}]
+    state.cachedRoutes = []
   }
 }
 

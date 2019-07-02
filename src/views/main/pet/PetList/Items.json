@@ -1,0 +1,28 @@
+{
+  "speciesItems": [
+    {
+      "label": "狗",
+      "value": 1
+    },
+    {
+      "label": "猫",
+      "value": 2
+    },
+    {
+      "label": "仓鼠",
+      "value": 3
+    },
+    {
+      "label": "兔",
+      "value": 4
+    },
+    {
+      "label": "恐龙",
+      "value": 5
+    },
+    {
+      "label": "其他",
+      "value": 0
+    }
+  ]
+}

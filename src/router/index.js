@@ -33,8 +33,8 @@ const router = new Router({
   routes
 })
 
-if (localStore.get('?token') && store) {
-  store.commit('set_token', localStore.get('token'))
+if (localStore.get('?user') && store) {
+  store.commit('set_user', localStore.get('user'))
 }
 
 // 不添加到navBar的路由项

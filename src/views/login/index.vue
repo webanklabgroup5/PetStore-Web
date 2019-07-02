@@ -3,16 +3,22 @@
     <div class="login">
       <el-form :model="formLogin" label-position="left">
         <el-form-item class="title">
-          <span>Vue管理后台模板</span>
+          <span>宠物商店系统</span>
         </el-form-item>
         <el-form-item>
-          <el-input ref="account" v-model="formLogin.loginName" placeholder="账号" @keyup.enter.native="login"></el-input>
+          <el-radio v-model="formLogin.type" :label="0">管理员</el-radio>
+          <el-radio v-model="formLogin.type" :label="1">普通用户</el-radio>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="formLogin.password" placeholder="密码" type="password" @keyup.enter.native="login"></el-input>
+          <el-input ref="account" v-model="formLogin.user_name" placeholder="账号" @keyup.enter.native="login"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="formLogin.passwd" placeholder="密码" type="password" @keyup.enter.native="login">
+          </el-input>
         </el-form-item>
         <el-row type="flex" justify="center">
-          <el-button type="primary" @click="login" :disabled="!formLogin.loginName || !formLogin.password">登陆</el-button>
+          <el-button type="primary" @click="login" :disabled="!formLogin.user_name || !formLogin.passwd">登陆
+          </el-button>
         </el-row>
       </el-form>
     </div>
@@ -26,8 +32,9 @@ export default {
   data() {
     return {
       formLogin: {
-        password: '',
-        loginName: ''
+        passwd: '',
+        user_name: '',
+        type: 0
       },
       isMobile: false
     }
@@ -38,15 +45,12 @@ export default {
   },
   methods: {
     login() {
-      let tempData = {
-        name: this.formLogin.loginName,
-        password: this.formLogin.password
-      }
+      let tempData = this.formLogin
       this.$store
         .dispatch('login', tempData)
         .then(() => {
           this.$message.success('登录成功')
-          this.$router.replace({ path: '/' })
+          this.$router.push({ path: '/' })
         })
         .catch(err => {
           this.$message.error(err)
