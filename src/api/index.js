@@ -52,5 +52,50 @@ export default {
       method: 'get',
       params
     })
+  },
+
+  // 市场宠物列表
+  marketPetList(params) {
+    return request({
+      url: '/market/petlist',
+      method: 'get',
+      params
+    })
+  },
+
+  // 市场用户列表
+  marketUserList(params) {
+    return request({
+      url: '/market/userlist',
+      method: 'get',
+      params
+    })
+  },
+
+  // 全部订单列表
+  tradeList(params) {
+    return request({
+      url: '/tradelist',
+      method: 'get',
+      params
+    })
+  },
+
+  // 全部仲裁列表
+  arbitrationList(params) {
+    return request({
+      url: '/arbitrationlist',
+      method: 'get',
+      params
+    })
+  },
+
+  // 操作仲裁
+  judge(data) {
+    return request({
+      url: '/judge',
+      method: 'post',
+      data
+    })
   }
 }

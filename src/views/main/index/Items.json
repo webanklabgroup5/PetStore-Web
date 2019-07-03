@@ -1,24 +1,50 @@
 {
+  "speciesItems": [
+    {
+      "label": "狗",
+      "value": 1
+    },
+    {
+      "label": "猫",
+      "value": 2
+    },
+    {
+      "label": "仓鼠",
+      "value": 3
+    },
+    {
+      "label": "兔",
+      "value": 4
+    },
+    {
+      "label": "恐龙",
+      "value": 5
+    },
+    {
+      "label": "其他",
+      "value": 0
+    }
+  ],
   "numCards": [
     {
       "icon": "money",
       "num": 50000,
-      "label": "今日营销额"
+      "label": "总交易量"
     },
     {
-      "icon": "order",
+      "icon": "order-blue",
       "num": 20,
-      "label": "今日订单数"
+      "label": "总订单数"
     },
     {
       "icon": "fans",
       "num": 123,
-      "label": "今日新增粉丝"
+      "label": "总用户数"
     },
     {
-      "icon": "access",
+      "icon": "pet-pink",
       "num": 232,
-      "label": "今日访问量"
+      "label": "总宠物数"
     }
   ],
   "todoCards": [
@@ -45,36 +71,33 @@
   ],
   "quickButtons": [
     {
-      "label": "开单",
+      "label": "用户",
       "color": "#2da3fb",
-      "icon": "write",
+      "icon": "user",
       "mouseEnter": true
     },
     {
-      "label": "补货",
+      "label": "宠物",
       "color": "#2da3fb",
-      "icon": "cart",
+      "icon": "pet",
       "mouseEnter": true
     },
     {
-      "label": "敬请期待",
-      "color": "#999999",
-      "disabled": true,
-      "icon": "more",
+      "label": "市场",
+      "color": "#2da3fb",
+      "icon": "market",
       "mouseEnter": true
     },
     {
-      "label": "敬请期待",
-      "color": "#999999",
-      "disabled": true,
-      "icon": "more",
+      "label": "仲裁",
+      "color": "#2da3fb",
+      "icon": "arbitration",
       "mouseEnter": true
     },
     {
-      "label": "敬请期待",
-      "color": "#999999",
-      "disabled": true,
-      "icon": "more",
+      "label": "订单",
+      "color": "#2da3fb",
+      "icon": "order",
       "mouseEnter": true
     },
     {

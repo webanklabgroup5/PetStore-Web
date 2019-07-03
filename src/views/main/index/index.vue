@@ -52,11 +52,13 @@
         <!-- 快速操作 -->
         <el-card class="quick-card">
           <div slot="header">
-            <span>快速操作</span>
+            <span>快速链接</span>
           </div>
           <el-row class="quick-button-row">
-            <el-col v-for="(item, index) in quickButtons" :key="index" class="button" :style="{backgroundColor: item.color,cursor:item.disabled?'':'pointer'}">
-              <div @mouseenter="handleMouse(1,item)" @mouseleave="handleMouse(2,item)" class="button-inner">
+            <el-col v-for="(item, index) in quickButtons" :key="index" class="button"
+              :style="{backgroundColor: item.color,cursor:item.disabled?'':'pointer'}">
+              <div @mouseenter="handleMouse(1,item)" @mouseleave="handleMouse(2,item)" @click="handleClickQuick(item)"
+                class="button-inner">
                 <div :class="{'icon':true,'animated bounce':item.mouseEnter}">
                   <svg-icon :iconName="item.icon" width="48" height="48"></svg-icon>
                 </div>
@@ -73,7 +75,7 @@
         <!-- 缺货预警 -->
         <el-card class="lack-card">
           <div slot="header">
-            <span>热销商品</span>
+            <span>热销宠物</span>
           </div>
           <div>
             <cm-table :list="list" :options="options" height="300" :columns="columns"></cm-table>
@@ -82,39 +84,14 @@
       </el-col>
     </el-row>
 
-    <div style="height:20px;"></div>
-
-    <!-- 图表 -->
-    <el-row>
-      <el-card>
-        <el-row>
-          <el-col :span="4" :xs="24">
-            <el-select v-model="chartType" @change="handleChangeChartType">
-              <el-option label="营业额" :value="1"></el-option>
-              <el-option label="销量" :value="2"></el-option>
-            </el-select>
-          </el-col>
-          <el-col :span="4" :xs="24">
-            <el-date-picker ref="datePicker" v-model="chartDate" type="month" placeholder="选择日期" value-format="yyyy-MM" 
-            :clearable="false" :editable="false">
-            </el-date-picker>
-          </el-col>
-        </el-row>
-        <div>
-          <ve-line ref="chart" :data="chartData" :settings="chartSettings" :data-zoom="dataZoom" :data-empty="dataEmpty"></ve-line>
-        </div>
-      </el-card>
-    </el-row>
   </div>
 </template>
 
 <script>
 import countTo from 'vue-count-to'
 import items from './Items.json'
-import 'echarts/lib/component/dataZoom'
-import 'v-charts/lib/style.css'
 import 'element-ui/lib/theme-chalk/display.css'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 export default {
   name: 'Main',
   components: {
@@ -126,92 +103,55 @@ export default {
       numCards: items.numCards,
       // 待处理事项
       todoCards: items.todoCards,
+      // 宠物类别
+      speciesItems: items.speciesItems,
       // 快速操作按钮
       quickButtons: items.quickButtons,
-      // 图表类型，1为营业额，2为销量
-      chartType: 1,
-      // 图表日期
-      chartDate: '',
-      // 图表是否无数据
-      dataEmpty: false,
-      // 缩放
-      dataZoom: [
-        {
-          type: 'slider',
-          start: 0,
-          end: 100
-        }
-      ],
-      // 图表数据
-      chartData: {
-        columns: ['date', 'lens', 'glass'],
-        rows: [
-          { date: '06-06', lens: 5000, glass: 100 },
-          { date: '06-07', lens: 5020, glass: 200 },
-          { date: '06-08', lens: 5400, glass: 400 },
-          { date: '06-09', lens: 4000, glass: 500 },
-          { date: '06-10', lens: 5020, glass: 200 },
-          { date: '06-11', lens: 5400, glass: 400 },
-          { date: '06-12', lens: 4000, glass: 500 }
-        ],
-      },
-      chartSettings: {
-        labelMap: {
-          'lens': '镜片',
-          'glass': '镜架'
-        },
-        yAxisName: ['金额(元)'],
-        xAxisName: ['日期']
-      },
       // 缺货列表
-      list: [
-        {
-          id: 1,
-          name: '高清透明镜片',
-          type_id: 1,
-          type: '镜片',
-          sold_count: 10,
-          num: 10
-        },
-        {
-          id: 2,
-          name: '高清蓝光镜片',
-          type_id: 2,
-          type: '镜片',
-          sold_count: 20,
-          num: 3
-        },
-      ],
+      list: [],
       columns: [
         {
-          prop: 'id',
-          label: '商品编号',
-          align: 'center'
+          prop: 'photo',
+          label: '宠物图片',
+          align: 'center',
+          formatter: (row, column) => {
+            return `<img src=${row.img_url} width="60" height="auto">`
+          }
         },
         {
           prop: 'name',
-          label: '商品名称',
+          label: '宠物名字',
           align: 'center',
         },
         {
-          prop: 'type_id',
-          label: '款型编号',
-          align: 'center',
-        },
-        {
-          prop: 'sold_count',
-          label: '销量',
-          align: 'center',
-        },
-        {
-          prop: 'num',
-          label: '库存',
+          prop: 'species',
+          label: '宠物品种',
           align: 'center',
           formatter: (row, column) => {
-            if (row.num < 5) return `<span style="color:red;font-weight:bold;">${row.num}</span>`
-            else return `${row.num}`
+            return this.speciesItems.find(item => item.value === row.species).label
           }
         },
+        {
+          prop: 'birthday',
+          label: '宠物生日',
+          align: 'center',
+        },
+        {
+          prop: 'price',
+          label: '宠物价格',
+          align: 'center',
+          formatter: (row, column) => {
+            return row.status === 1 ? row.price : '/'
+          }
+        },
+        {
+          prop: 'owner',
+          label: '主人',
+          align: 'center',
+          formatter: (row, column) => {
+            return row.owner? row.owner.user_name : ''
+          }
+        }
       ], // 需要展示的列
       options: {
         stripe: true, // 是否为斑马纹 table
@@ -224,18 +164,8 @@ export default {
   computed: {
     ...mapState(['common'])
   },
-  watch: {
-    // 当侧边栏宽度变化时，图表要动态渲染。
-    'common.isCollapse': function() {
-      setTimeout(() => {
-        this.$refs['chart'].echarts.resize()
-      }, 400)
-    }
-  },
   created() {
-    this.getNowMonth()
-    this.dataZoom[0].end = this.common.isMobile? 20 : 100
-    this.dataZoom[0].maxSpan = this.common.isMobile? 20 : 100
+    this.initData()
     // 解决首次进入页面，mouseEnter为true的问题。
     setTimeout(() => {
       this.quickButtons.forEach(item => {
@@ -244,13 +174,30 @@ export default {
     }, 2000)
   },
   methods: {
-    // 获取当前月份
-    getNowMonth() {
-      let now = new Date()
-      let year = now.getFullYear()
-      let month = now.getMonth() + 1
-      month = month > 9 ? `${month}` : `0${month}`
-      this.chartDate = `${year}-${month}`
+    // 获取所有数据
+    initData() {
+      this.api.tradeList({limit:99999,offset:0}).then(res => {
+        if (res.status === 1) {
+          let totalPrice = 0
+          let totalOrder = res.trade_list.length
+          res.trade_list.forEach(item => {
+            totalPrice += item.price
+          })
+          this.numCards[0].num = totalPrice
+          this.numCards[1].num = totalOrder
+        }
+      })
+      this.api.userList({limit:99999,offset:0}).then(res => {
+        if (res.status === 1) {
+          this.numCards[2].num = res.user_list.length
+        }
+      })
+      this.api.petList({limit:99999,offset:0}).then(res => {
+        if (res.status === 1) {
+          this.numCards[3].num = res.pet_list.length
+          this.list = res.pet_list.length > 5 ? res.pet_list.slice(0,5) : res.pet_list
+        }
+      })
     },
     // 鼠标事件
     handleMouse(type, item) {
@@ -258,29 +205,25 @@ export default {
       // 1为over,2为out
       item.mouseEnter = type === 1
     },
-    handleChangeChartType() {
-      if (this.chartType === 1) {
-        this.chartSettings.yAxisName = ['金额(元)']
-        this.chartData.rows = [
-          { date: '06-06', lens: 5000, glass: 100 },
-          { date: '06-07', lens: 5020, glass: 200 },
-          { date: '06-08', lens: 5400, glass: 400 },
-          { date: '06-09', lens: 4000, glass: 500 },
-          { date: '06-10', lens: 5020, glass: 200 },
-          { date: '06-11', lens: 5400, glass: 400 },
-          { date: '06-12', lens: 4000, glass: 500 },
-        ]
-      } else {
-        this.chartSettings.yAxisName = ['销量(件)']
-        this.chartData.rows = [
-          { date: '06-06', lens: 50, glass: 10 },
-          { date: '06-07', lens: 50, glass: 20 },
-          { date: '06-08', lens: 50, glass: 40 },
-          { date: '06-09', lens: 400, glass: 50 },
-          { date: '06-10', lens: 50, glass: 0 },
-          { date: '06-11', lens: 50, glass: 0 },
-          { date: '06-12', lens: 400, glass: 50 },
-        ]
+    handleClickQuick(item) {
+      switch(item.icon) {
+      case 'user':
+        this.$router.push({path: '/user/userlist'})
+        break
+      case 'pet':
+        this.$router.push({path: '/pet/petlist'})
+        break
+      case 'market':
+        this.$router.push({path: '/market/marketlist'})
+        break
+      case 'arbitration':
+        this.$router.push({path: '/arbitration/arbitrationlist'})
+        break
+      case 'order':
+        this.$router.push({path: '/order/orderlist'})
+        break
+      default:
+        break
       }
     }
   }

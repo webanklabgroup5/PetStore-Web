@@ -15,27 +15,36 @@ export default {
       list: [],
       columns: [
         {
-          prop: '',
+          prop: 'buyer',
           label: '买家',
           align: 'center',
+          formatter: (row, column) => {
+            return row.buyer ? row.buyer.user_name : ''
+          }
         },
         {
-          prop: '',
+          prop: 'seller',
           label: '卖家',
           align: 'center',
+          formatter: (row, column) => {
+            return row.seller ? row.seller.user_name : ''
+          }
         },
         {
-          prop: '',
+          prop: 'pet',
           label: '宠物名',
           align: 'center',
+          formatter: (row, column) => {
+            return row.pet ? row.pet.name : ''
+          }
         },
         {
-          prop: '',
+          prop: 'price',
           label: '订单金额',
           align: 'center',
         },
         {
-          prop: '',
+          prop: 'date',
           label: '创建时间',
           align: 'center',
         }
@@ -57,6 +66,26 @@ export default {
   },
   methods: {
     initData() {
+      const tempParams = {
+        limit: this.pagination.pageSize,
+        offset: (this.pagination.pageIndex - 1) * this.pagination.pageSize
+      }
+      this.api.tradeList(tempParams).then(res => {
+        if (res.status === 1) {
+          this.list = res.trade_list
+          this.total = res.total
+        }
+      })
+    },
+    // 切换每页显示的数量
+    handleSizeChange(pagination) {
+      this.pagination = pagination
+      this.initData()
+    },
+    // 切换页码
+    handleIndexChange(pagination) {
+      this.pagination = pagination
+      this.initData()
     },
   }
 }

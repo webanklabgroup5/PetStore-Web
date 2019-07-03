@@ -5,7 +5,7 @@
     </el-menu>
     <!-- 表格 -->
     <div class="table-container">
-      <cm-table :list="list" :columns="columns" :pagination="pagination" :operates="operates" :options="options"
+      <cm-table :list="list" :columns="columns" :pagination="pagination" :options="options"
         :total="total"></cm-table>
     </div>
   </div>
@@ -36,31 +36,49 @@ export default {
   computed: {
     columns() {
       return items.list[this.type.id].columns
-    },
-    operates() {
-      return items.list[this.type.id].operates
     }
   },
   created() {
     this.initData()
   },
   methods: {
-    initData() {
+    initData(type = 0) {
+      // type为0时为默认获取数据情况，为1时是切换类型情况
+      if (type) {
+        this.pagination = { pageIndex: 1, pageSize: 20 }
+      }
       const tempParams = {
         limit: this.pagination.pageSize,
         offset: (this.pagination.pageIndex - 1) * this.pagination.pageSize
       }
-      // this.api.userList(tempParams).then(res => {
-      //   if (res.status === 1) {
-      //     this.list = res.user_list
-      //     this.total = res.total
-      //   }
-      // })
+      let p
+      if (this.type.id === 1) {
+        p = this.api.marketPetList(tempParams)
+      } else if (this.type.id === 2) {
+        p = this.api.marketUserList(tempParams)
+      }
+      p.then(res => {
+        if (res.status === 1) {
+          this.list = this.type.id === 1 ? res.pet_list : res.user_list
+          this.total = res.total
+        }
+      })
     },
     // 切换类型
     handleChangeType(index) {
       this.type = this.typeItems.find(item => parseInt(index) === item.id)
-    }
+      this.initData(1)
+    },
+    // 切换每页显示的数量
+    handleSizeChange(pagination) {
+      this.pagination = pagination
+      this.initData()
+    },
+    // 切换页码
+    handleIndexChange(pagination) {
+      this.pagination = pagination
+      this.initData()
+    },
   }
 }
 </script>

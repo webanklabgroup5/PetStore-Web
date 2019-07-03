@@ -48,7 +48,7 @@ export default {
             type: 'success',
             icon: 'el-icon-edit',
             method: (index, row) => {
-              this.handleApply(row)
+              this.handleApply(row, 1)
             }
           },
           {
@@ -56,7 +56,7 @@ export default {
             type: 'danger',
             icon: 'el-icon-edit',
             method: (index, row) => {
-              this.handleApply(row)
+              this.handleApply(row, 0)
             }
           }
         ]
@@ -78,14 +78,43 @@ export default {
   },
   methods: {
     initData() {
+      const tempParams = {
+        limit: this.pagination.pageSize,
+        offset: (this.pagination.pageIndex - 1) * this.pagination.pageSize
+      }
+      this.api.arbitrationList(tempParams).then(res => {
+        if (res.status === 1) {
+          this.list = res.arbitration_list
+          this.total = res.total
+        }
+      })
     },
-    handleApply(item) {
+    // 切换每页显示的数量
+    handleSizeChange(pagination) {
+      this.pagination = pagination
+      this.initData()
+    },
+    // 切换页码
+    handleIndexChange(pagination) {
+      this.pagination = pagination
+      this.initData()
+    },
+    handleApply(item, action) {
       this.$confirm('确定该操作吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-
+        const tempData = {
+          arbitration_id: item.id,
+          action
+        }
+        this.api.judge(tempData).then(res => {
+          if (res.status === 1) {
+            this.$message.success('仲裁成功！')
+            this.initData()
+          }
+        })
       }).catch(() => {})
     }
   }
