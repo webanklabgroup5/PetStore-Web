@@ -118,11 +118,11 @@ export default {
     },
     height: {
       type: String,
-      default: 'auto'
+      default: null
     },
     maxHeight: {
       type: Number,
-      default: 160
+      default: null
     }, // 计算表格的高度
     options: {
       type: Object,

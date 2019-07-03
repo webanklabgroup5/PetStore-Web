@@ -1,28 +1,33 @@
 import localStore from 'storejs'
+import api from '@/api'
 
 const state = {
-  user: {
-    token: ''
-  }
+  user: {}
 }
 
 const mutations = {
-  set_user: (state,data) => {
+  set_user: (state, data) => {
     state.user = data
-    localStore.set('user',data)
+    localStore.set('user', data)
   }
 }
 
 const actions = {
-  login ({commit} , data) {
-    return new Promise (resolve=> {
-      commit('set_user', {token: '123456', type : data.type})
-      resolve()
+  login({ commit }, data) {
+    return new Promise((resolve, reject) => {
+      api.login(data).then(res => {
+        if (res.status === 1) {
+          commit('set_user', res.user)
+          resolve()
+        }
+      }).catch(() => {
+        reject()
+      })
     })
   },
-  logout ({commit}) {
+  logout({ commit }) {
     return new Promise(resolve => {
-      commit('set_user', {token: ''})
+      commit('set_user', {})
       resolve()
     })
   }

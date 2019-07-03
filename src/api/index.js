@@ -1,13 +1,7 @@
 import request from '@/utils/request'
 
 export default {
-  userAdd(data) {
-    return request({
-      url: '/useradd',
-      method: 'post',
-      data
-    })
-  },
+  // 用户登录
   login(data) {
     return request({
       url: '/login',
@@ -15,6 +9,25 @@ export default {
       data
     })
   },
+
+  // 退出登录
+  logout() {
+    return request({
+      url: '/logout',
+      method: 'post'
+    })
+  },
+
+  // 申请列表
+  applyList(params) {
+    return request({
+      url: '/applylist',
+      method: 'get',
+      params
+    })
+  },
+
+  // 用户列表
   userList(params) {
     return request({
       url: '/userlist',
@@ -22,25 +35,22 @@ export default {
       params
     })
   },
-  petAdd(data) {
+  
+  // 审核用户开户
+  userAudit(data) {
     return request({
-      url: '/petadd',
+      url: '/useraudit',
       method: 'post',
       data
     })
   },
-  petOn(data) {
+
+  // 宠物列表
+  petList(params) {
     return request({
-      url: '/peton',
-      method: 'post',
-      data
-    })
-  },
-  petDown(data) {
-    return request({
-      url: '/petdown',
-      method: 'post',
-      data
+      url: '/petlist',
+      method: 'get',
+      params
     })
   }
 }

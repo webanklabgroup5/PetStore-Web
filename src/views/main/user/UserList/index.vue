@@ -1,14 +1,5 @@
 <template>
   <div class="user-container">
-    <!-- 搜索栏 -->
-    <!-- <el-row type="flex" align="middle" justify="end">
-      <el-col :span="6" style="text-align:end">
-        <el-button type="primary" @click="handleCreate({})">创建用户</el-button>
-      </el-col>
-    </el-row>
-
-    <div style="height:20px"></div>
- -->
     <el-menu default-active="1" mode="horizontal" @select="handleChangeType">
       <el-menu-item v-for="(item,index) in typeItems" :key="index" :index="''+item.id">{{item.name}}</el-menu-item>
     </el-menu>
@@ -18,23 +9,40 @@
         :total="total"></cm-table>
     </div>
 
-    <!-- <create-user :show.sync="showCreate" :formData="formData" @afterCreate="initData"></create-user> -->
   </div>
 </template>
 
 <script>
-// import CreateUser from './CreateUser'
 import items from './Items'
 export default {
   name: 'UserList',
   data() {
     return {
-      // formData: {}, // 空对象为新建用户
-      // showCreate: false,
-      type: {id: 1, label: '用户列表'}, // 1为用户列表，2为申请列表
+      type: { id: 1, label: '用户列表' }, // 1为用户列表，2为申请列表
       typeItems: items.typeItems,
       total: 0,
       list: [],
+      applyOperates: {
+        width: 200,
+        list: [
+          {
+            label: '同意',
+            type: 'success',
+            icon: 'el-icon-edit',
+            method: (index, row) => {
+              this.handleApply(row, 1)
+            }
+          },
+          {
+            label: '拒绝',
+            type: 'danger',
+            icon: 'el-icon-edit',
+            method: (index, row) => {
+              this.handleApply(row, 0)
+            }
+          }
+        ]
+      },
       pagination: {
         pageIndex: 1,
         pageSize: 20,
@@ -52,32 +60,59 @@ export default {
       return items.list[this.type.id].columns
     },
     operates() {
-      return items.list[this.type.id].operates
+      return this.type.id === 1 ? {list: []} : this.applyOperates
     }
   },
   created() {
     this.initData()
   },
   methods: {
-    initData() {
+    initData(type = 0) {
+      // type为0时为默认获取数据情况，为1时是切换类型情况
+      if (type) {
+        this.pagination = { pageIndex: 1, pageSize: 20 }
+      }
       const tempParams = {
         limit: this.pagination.pageSize,
         offset: (this.pagination.pageIndex - 1) * this.pagination.pageSize
       }
-      // this.api.userList(tempParams).then(res => {
-      //   if (res.status === 1) {
-      //     this.list = res.user_list
-      //     this.total = res.total
-      //   }
-      // })
+      let p
+      if (this.type.id === 1) {
+        p = this.api.userList(tempParams)
+      } else if (this.type.id === 2) {
+        p = this.api.applyList(tempParams)
+      }
+      p.then(res => {
+        if (res.status === 1) {
+          this.list = this.type.id === 1 ? res.user_list : res.apply_list
+          this.total = res.total
+        }
+      })
     },
-    // handleCreate(item) {
-    //   this.formData = item
-    //   this.showCreate = true
-    // },
+    // 切换每页显示的数量
+    handleSizeChange(pagination) {
+      this.pagination = pagination
+      this.initData()
+    },
+    // 切换页码
+    handleIndexChange(pagination) {
+      this.pagination = pagination
+      this.initData()
+    },
     // 切换类型
     handleChangeType(index) {
       this.type = this.typeItems.find(item => parseInt(index) === item.id)
+      this.initData(1)
+    },
+    // 处理审核
+    handleApply(item, action) {
+      const tempData = { apply_id: item.id, action }
+      this.api.userAudit(tempData).then(res => {
+        if (res.status === 1) {
+          this.$message.success('审核成功！')
+          this.initData()
+        }
+      })
     }
   }
 }

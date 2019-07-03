@@ -47,7 +47,7 @@ export default {
           label: '宠物图片',
           align: 'center',
           formatter: (row, column) => {
-            return `<img src=${row.photo} width="80" height="auto">`
+            return `<img src=${row.img_url} width="80" height="auto">`
           }
         },
         {
@@ -60,7 +60,7 @@ export default {
           label: '宠物品种',
           align: 'center',
           formatter: (row, column) => {
-            return this.speciesItems.find(item => item.value === row.species)
+            return this.speciesItems.find(item => item.value === row.species).label
           }
         },
         {
@@ -80,8 +80,8 @@ export default {
           render: (h, params) => {
             let item = params.row
             return h('el-tag', {
-              props: { type: item.status === 0 ? 'success' : 'info' }
-            }, item.status === 0 ? '上架中' : '已下架')
+              props: { type: item.status === 1 ? 'success' : 'info' }
+            }, item.status === 1 ? '上架中' : '已下架')
           }
         },
         {
@@ -89,9 +89,17 @@ export default {
           label: '宠物价格',
           align: 'center',
           formatter: (row, column) => {
-            return row.status === 0 ? row.price : '/'
+            return row.status === 1 ? row.price : '/'
           }
         },
+        {
+          prop: 'owner',
+          label: '主人',
+          align: 'center',
+          formatter: (row, column) => {
+            return row.owner? row.owner.user_name : ''
+          }
+        }
       ], // 需要展示的列
       pagination: {
         pageIndex: 1,
@@ -110,7 +118,27 @@ export default {
   },
   methods: {
     initData() {
-    }
+      const tempParams = {
+        limit: this.pagination.pageSize,
+        offset: (this.pagination.pageIndex - 1) * this.pagination.pageSize
+      }
+      this.api.petList(tempParams).then(res => {
+        if (res.status === 1) {
+          this.list = res.pet_list
+          this.total = res.total
+        }
+      })
+    },
+    // 切换每页显示的数量
+    handleSizeChange(pagination) {
+      this.pagination = pagination
+      this.initData()
+    },
+    // 切换页码
+    handleIndexChange(pagination) {
+      this.pagination = pagination
+      this.initData()
+    },
   }
 }
 </script>

@@ -1,11 +1,11 @@
 const userColumns = [
   {
-    prop: 'userName',
+    prop: 'user_name',
     label: '用户名',
     align: 'center',
   },
   {
-    prop: 'remainingCredit',
+    prop: 'credit',
     label: '账户余额',
     align: 'center',
   },
@@ -14,49 +14,23 @@ const userColumns = [
     label: '宠物数',
     align: 'center',
     formatter: (row, column) => {
-      return row.petList.length
+      return row.petList? row.petList.length : 0
     }
   }
 ]
 
-const userOperates = {
-  list: []
-}
-
 const applyColumns = [
   {
-    prop: 'userName',
+    prop: 'user_name',
     label: '用户名',
     align: 'center'
   },
   {
-    prop: 'remainingCredit',
+    prop: 'credit',
     label: '账户余额',
     align: 'center',
   }
 ]
-
-const applyOperates = {
-  width: 200,
-  list: [
-    {
-      label: '同意',
-      type: 'success',
-      icon: 'el-icon-edit',
-      method: (index, row) => {
-        this.handleApply(row)
-      }
-    },
-    {
-      label: '拒绝',
-      type: 'danger',
-      icon: 'el-icon-edit',
-      method: (index, row) => {
-        this.handleApply(row)
-      }
-    }
-  ]
-}
 
 const typeItems = [
   {
@@ -71,12 +45,10 @@ const typeItems = [
 
 const list = {
   1: {
-    columns: userColumns,
-    operates: userOperates
+    columns: userColumns
   },
   2: {
-    columns: applyColumns,
-    operates: applyOperates
+    columns: applyColumns
   }
 }
 
