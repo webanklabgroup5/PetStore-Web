@@ -31,7 +31,7 @@
         <!-- 待处理事项 -->
         <el-card class="todo-cards">
           <div slot="header">
-            <span>待处理事项</span>
+            <span>订单事项</span>
           </div>
           <div style="height:10px"></div>
           <el-row type="flex" justify="space-around">
@@ -180,11 +180,23 @@ export default {
         if (res.status === 1) {
           let totalPrice = 0
           let totalOrder = res.trade_list.length
+          let finishOrder = 0
+          let arbitrationOrder = 0
+          let successOrder = 0
+          let failOrder = 0
           res.trade_list.forEach(item => {
             totalPrice += item.price
+            if (item.status == 0) finishOrder += 1
+            if (item.status == 1) arbitrationOrder += 1
+            if (item.status == 20) failOrder += 1
+            if (item.status == 21) successOrder += 1
           })
           this.numCards[0].num = totalPrice
           this.numCards[1].num = totalOrder
+          this.todoCards[0].num = finishOrder
+          this.todoCards[1].num = arbitrationOrder
+          this.todoCards[2].num = successOrder
+          this.todoCards[3].num = failOrder
         }
       })
       this.api.userList({limit:99999,offset:0}).then(res => {

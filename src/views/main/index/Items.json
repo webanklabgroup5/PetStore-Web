@@ -50,22 +50,22 @@
   "todoCards": [
     {
       "icon": "sending",
-      "label": "待发货",
+      "label": "已完成",
       "num": 1000
     },
     {
       "icon": "after-sales",
-      "label": "售后",
+      "label": "待仲裁",
       "num": 100
     },
     {
       "icon": "refund",
-      "label": "退款",
+      "label": "仲裁成功",
       "num": 100
     },
     {
       "icon": "customer-service",
-      "label": "客户咨询",
+      "label": "仲裁失败",
       "num": 100
     }
   ],
