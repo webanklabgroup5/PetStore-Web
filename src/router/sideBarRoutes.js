@@ -32,7 +32,7 @@ const routes = [{
       routeText: '用户模块',
       routeIcon: 'el-icon-location',
       showSideBar: true,
-      keepAlive: true
+      
     },
     component: _import('main/user/UserList/index')
   }]
@@ -50,7 +50,7 @@ const routes = [{
       routeText: '宠物模块',
       routeIcon: 'el-icon-location',
       showSideBar: true,
-      keepAlive: true
+      
     },
     component: _import('main/pet/PetList/index')
   }]
@@ -68,7 +68,7 @@ const routes = [{
       routeText: '市场模块',
       routeIcon: 'el-icon-location',
       showSideBar: true,
-      keepAlive: true
+      
     },
     component: _import('main/market/MarketList/index')
   }]
@@ -86,7 +86,7 @@ const routes = [{
       routeText: '仲裁模块',
       routeIcon: 'el-icon-location',
       showSideBar: true,
-      keepAlive: true
+      
     },
     component: _import('main/arbitration/ArbitrationList/index')
   }]
@@ -104,7 +104,7 @@ const routes = [{
       routeText: '订单模块',
       routeIcon: 'el-icon-location',
       showSideBar: true,
-      keepAlive: true
+      
     },
     component: _import('main/order/OrderList/index')
   }]

@@ -44,8 +44,8 @@ export default {
   data() {
     return {
       formLogin: {
-        password: '',
-        user_name: '',
+        password: 'mzwmzw',
+        user_name: 'mzw',
         type: 0
       },
       logo: require('../../assets/logo.png'),

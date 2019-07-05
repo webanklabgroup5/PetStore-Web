@@ -135,6 +135,7 @@ export default {
           prop: 'birthday',
           label: '宠物生日',
           align: 'center',
+          width: 100
         },
         {
           prop: 'price',
