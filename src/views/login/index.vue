@@ -1,10 +1,11 @@
 <template>
-<div style="height:100%">
+<div class="login-container">
   <el-row class="login-wrapper" type="flex" justify="center" align="middle">
     <div class="login">
       <el-form :model="formLogin" label-position="left">
         <el-form-item class="title">
-          <span>宠物商店系统</span>
+          <div><img :src="logo" width="80"></div>
+          <div style="color:#fff">宠物商店系统</div>
         </el-form-item>
         <!-- <el-form-item>
           <el-radio v-model="formLogin.type" :label="0">管理员</el-radio>
@@ -47,6 +48,7 @@ export default {
         user_name: '',
         type: 0
       },
+      logo: require('../../assets/logo.png'),
       showCreate: false,
       isMobile: false
     }
@@ -73,6 +75,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.login-container {
+  height: 100%;
+  background-image: url('../../assets/background1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .login-wrapper {
   height: 100%;
   @media screen and (max-width: 768px) {
@@ -86,8 +94,7 @@ export default {
     }
   }
   .login {
-    border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #cac6c6;
+    background: rgba(0,0,0,0.4);
     border-radius: 10px;
     padding: 2% 4%;
     box-sizing: border-box;
@@ -95,7 +102,7 @@ export default {
       text-align: center;
       color: #333;
       /deep/ .el-form-item__content {
-        font-size: 20px;
+        font-size: 24px;
       }
     }
     .el-button {

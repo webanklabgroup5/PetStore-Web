@@ -2,7 +2,7 @@
   <el-aside class="aside-container">
     <div>
       <div :class="{'isClossTab':true,'close-tab':isCollapse}">
-        <img :src="logo" width="18" class="logo">
+        <img :src="logo" width="24" class="logo">
         <span :class="isCollapse?'animated fadeOut':'animated fadeIn'">宠物商店管理系统</span>
       </div>
       <el-menu
