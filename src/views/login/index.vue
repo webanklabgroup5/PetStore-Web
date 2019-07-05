@@ -5,7 +5,7 @@
       <el-form :model="formLogin" label-position="left">
         <el-form-item class="title">
           <div><img :src="logo" width="80"></div>
-          <div style="color:#fff">宠物商店系统</div>
+          <!-- <div style="color:#fff">宠物商店系统</div> -->
         </el-form-item>
         <!-- <el-form-item>
           <el-radio v-model="formLogin.type" :label="0">管理员</el-radio>
@@ -22,7 +22,7 @@
           <el-link type="primary" @click="showCreate=true">没有账号？点击申请</el-link>
         </div> -->
         <el-row type="flex" justify="center">
-          <el-button type="primary" @click="login" :disabled="!formLogin.user_name || !formLogin.password">登陆
+          <el-button type="primary" @click="login" :disabled="!formLogin.user_name || !formLogin.password">登 陆
           </el-button>
         </el-row>
       </el-form>
@@ -94,7 +94,7 @@ export default {
     }
   }
   .login {
-    background: rgba(0,0,0,0.4);
+    background: rgba(255,255,255,0.3);
     border-radius: 10px;
     padding: 2% 4%;
     box-sizing: border-box;
@@ -120,5 +120,9 @@ export default {
   margin-top: -12px;
   margin-bottom: 10px;
   text-align: end;
+}
+/deep/ .el-button--primary {
+  border: #357fcb;
+  background: #357fcb;
 }
 </style>
