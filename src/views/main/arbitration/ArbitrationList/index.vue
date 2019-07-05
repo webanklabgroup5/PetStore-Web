@@ -15,27 +15,36 @@ export default {
       list: [],
       columns: [
         {
-          prop: '',
+          prop: 'buyer',
           label: '买家',
           align: 'center',
+          formatter: (row, column) => {
+            return row.buyer? row.buyer.user_name : ''
+          }
         },
         {
           prop: '',
           label: '卖家',
           align: 'center',
+          formatter: (row, column) => {
+            return row.seller? row.seller.user_name : ''
+          }
         },
         {
           prop: '',
           label: '宠物名',
           align: 'center',
+          formatter: (row, column) => {
+            return row.pet? row.pet.name : ''
+          }
         },
         {
-          prop: '',
+          prop: 'price',
           label: '订单金额',
           align: 'center',
         },
         {
-          prop: '',
+          prop: 'reason',
           label: '仲裁理由',
           align: 'center',
         }

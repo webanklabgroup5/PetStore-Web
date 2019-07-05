@@ -5,8 +5,8 @@
     </el-menu>
     <!-- 表格 -->
     <div class="table-container">
-      <cm-table :list="list" :columns="columns" :pagination="pagination" :operates="operates" :options="options"
-        :total="total"></cm-table>
+      <cm-table :list="list" :total="total" :options="options" :pagination="pagination" :columns="columns" :operates="operates"
+          @handleSizeChange="handleSizeChange" @handleIndexChange="handleIndexChange"></cm-table>
     </div>
 
   </div>
@@ -45,7 +45,7 @@ export default {
       },
       pagination: {
         pageIndex: 1,
-        pageSize: 20,
+        pageSize: 20
       }, // 分页参数
       options: {
         stripe: true, // 是否为斑马纹 table

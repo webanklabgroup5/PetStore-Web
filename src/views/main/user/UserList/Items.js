@@ -10,12 +10,9 @@ const userColumns = [
     align: 'center',
   },
   {
-    prop: 'petList',
+    prop: 'pet_count',
     label: '宠物数',
     align: 'center',
-    formatter: (row, column) => {
-      return row.petList? row.petList.length : 0
-    }
   }
 ]
 

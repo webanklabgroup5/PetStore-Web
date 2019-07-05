@@ -2,7 +2,9 @@ import localStore from 'storejs'
 import api from '@/api'
 
 const state = {
-  user: {}
+  user: {
+    token: ''
+  }
 }
 
 const mutations = {
@@ -17,6 +19,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       api.login(data).then(res => {
         if (res.status === 1) {
+          res.user.token = '123'
           commit('set_user', res.user)
           resolve()
         }
@@ -26,9 +29,15 @@ const actions = {
     })
   },
   logout({ commit }) {
-    return new Promise(resolve => {
-      commit('set_user', {})
-      resolve()
+    return new Promise((resolve, reject) => {
+      api.logout().then(res => {
+        if (res.status === 1) {
+          commit('set_user', {token: ''})
+          resolve()
+        }
+      }).catch(() => {
+        reject()
+      })
     })
   }
 }

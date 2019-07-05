@@ -1,6 +1,7 @@
 import axios from 'axios'
-// import router from '@/router'
-import { Loading } from 'element-ui'
+import router from '@/router'
+import { Loading, Message } from 'element-ui'
+import store from '@/store'
 
 let loading
 
@@ -30,6 +31,17 @@ request.interceptors.response.use(
     if (loading) loading.close()
     const res = response.data
     // 这里处理一些response 正常放回时的逻辑
+    if (res.status !== 1) {
+      Message({
+        message: res.error_msg,
+        type: 'error'
+      })
+      if (res.error_msg.includes('权限')) {
+        store.dispatch('logout').then(() => {
+          router.push({path: '/login'})
+        })
+      }
+    }
     return res
   },
   error => {

@@ -70,18 +70,18 @@ const sellerColumns = [
     label: '账户余额',
     align: 'center',
   },
-  {
-    prop: 'petList',
-    label: '热卖宠物',
-    align: 'center',
-    formatter: (row, column) => {
-      return row.pet_list? 
-        `<div style="display:flex;align-items:center;">
-        <img src=${row.pet_list[0].img_url} width="60" height="auto"><span style="padding-left:10px">${row.pet_list[0].name}</span>
-        </div>`
-        : ''
-    }
-  }
+  // {
+  //   prop: 'petList',
+  //   label: '热卖宠物',
+  //   align: 'center',
+  //   formatter: (row, column) => {
+  //     return row.pet_list? 
+  //       `<div style="display:flex;align-items:center;">
+  //       <img src=${row.pet_list[0].img_url} width="60" height="auto"><span style="padding-left:10px">${row.pet_list[0].name}</span>
+  //       </div>`
+  //       : ''
+  //   }
+  // }
 ]
 
 const typeItems = [

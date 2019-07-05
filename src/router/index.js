@@ -54,26 +54,26 @@ router.beforeEach((to, from, next) => {
   }
   next()
   // // 如果是登录页面且已登录就直接去首页
-  // if (to.name === 'Login' && store.getters.token) {
-  //   next({
-  //     path: '/'
-  //   })
-  //   return
-  // }
-  // if (to.matched.some(r => r.meta.requireAuth)) {
-  //   if (store.getters.token) {
-  //     next()
-  //   } else {
-  //     next({
-  //       path: '/login',
-  //       query: {
-  //         redirect: to.fullPath
-  //       }
-  //     })
-  //   }
-  // } else {
-  //   next()
-  // }
+  if (to.name === 'Login' && store.getters.token) {
+    next({
+      path: '/'
+    })
+    return
+  }
+  if (to.matched.some(r => r.meta.requireAuth)) {
+    if (store.getters.token) {
+      next()
+    } else {
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    }
+  } else {
+    next()
+  }
 })
 
 router.afterEach(() => {

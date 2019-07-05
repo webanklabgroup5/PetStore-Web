@@ -14,14 +14,14 @@
           <el-input ref="account" v-model="formLogin.user_name" placeholder="账号" @keyup.enter.native="login"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="formLogin.passwd" placeholder="密码" type="password" @keyup.enter.native="login">
+          <el-input v-model="formLogin.password" placeholder="密码" type="password" @keyup.enter.native="login">
           </el-input>
         </el-form-item>
         <!-- <div class="register-row">
           <el-link type="primary" @click="showCreate=true">没有账号？点击申请</el-link>
         </div> -->
         <el-row type="flex" justify="center">
-          <el-button type="primary" @click="login" :disabled="!formLogin.user_name || !formLogin.passwd">登陆
+          <el-button type="primary" @click="login" :disabled="!formLogin.user_name || !formLogin.password">登陆
           </el-button>
         </el-row>
       </el-form>
@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       formLogin: {
-        passwd: '',
+        password: '',
         user_name: '',
         type: 0
       },

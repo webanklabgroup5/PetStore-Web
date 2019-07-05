@@ -46,12 +46,12 @@ module.exports = {
   devServer: {
     port: 8088,
     // proxy: {
-    // 反向代理示例
-    // '/': {
-    // ws: false,
-    // target: 'http:/www.qq.com',
-    // changeOrigin: true
-    // }
+    // // 反向代理示例
+    //   '/': {
+    //     ws: false,
+    //     target: 'ali.theproudsoul.cn:22222',
+    //     changeOrigin: true
+    //   }
     // }
   }
 }
